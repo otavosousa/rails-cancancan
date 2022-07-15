@@ -17,13 +17,13 @@
         <td><%= user.username %></td>
         <td><%= user.admin %></td>
         <td><%= link_to 'Show', user %></td>
-        <td><%= link_to 'Edit', edit_user_path(user) %></td>
-        <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= can?(:edit, User) ? link_to('Edit', edit_user_path(user)) : '' %></td>
+        <td><%= can?(:destroy, User) ? link_to('Destroy', user, method: :delete, data: { confirm: 'Are you sure?' }) : '' %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
 <br>
-
-<%= link_to 'New User', new_user_path %>
+<%= can?([:new, :create], User) ? link_to('New User', new_user_path) : '' %>
+<br>
+<%= user_signed_in? && link_to('Sair', destroy_user_session_path, method: :delete) %>
